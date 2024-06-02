@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <app-add-todo (todoAdd)="addTodo($event)"></app-add-todo>
+
+            <div class="text-center my-4">
+                <button class="btn btn-primary mx-2" (click)="toggleView(false)">Incomplete Todos</button>
+                <button class="btn btn-primary mx-2" (click)="toggleView(true)">Completed Todos</button>
+            </div>
+
+            <h4 class="text-center text-primary my-4" *ngIf="!showCompleted">Incomplete Todos</h4>
+            <h4 class="text-center text-primary my-4" *ngIf="showCompleted">Completed Todos</h4>
+
+            <div *ngIf="!showCompleted && incompleteTodos.length === 0" class="text-center text-secondary">No Incomplete
+                Todos</div>
+            <div *ngIf="showCompleted && completedTodos.length === 0" class="text-center text-secondary">No Completed
+                Todos</div>
+
+            <div class="row">
+                <div *ngIf="!showCompleted">
+                    <div *ngFor="let todo of incompleteTodos; index as ind" class="col-12 col-sm-6 col-md-4 my-2">
+                        <div class="todo-box p-3 position-relative">
+                            <app-todo-item [todo]="todo" (todoDelete)="deleteTodo($event.todo, false)"
+                                (todoToggle)="toggleTodoStatus($event)"></app-todo-item>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="showCompleted">
+                    <div *ngFor="let todo of completedTodos; index as ind" class="col-12 col-sm-6 col-md-4 my-2">
+                        <div class="todo-box p-3 position-relative">
+                            <app-todo-item [todo]="todo" (todoDelete)="deleteTodo($event.todo, true)"
+                                (todoToggle)="toggleTodoStatus($event)"></app-todo-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
